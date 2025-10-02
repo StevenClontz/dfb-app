@@ -6,9 +6,10 @@
 		item: MenuItem;
 		allReviews: Review[];
 		onReview: (itemId: string) => void;
+		onViewReviews: (itemId: string) => void;
 	}
 
-	let { item, allReviews, onReview }: Props = $props();
+	let { item, allReviews, onReview, onViewReviews }: Props = $props();
 
 	let itemReviews = $derived(getMenuItemReviews(item.id, allReviews));
 	let averageRating = $derived(getAverageRating(item.id, allReviews));
@@ -28,12 +29,14 @@
 	
 	<div class="rating-section">
 		{#if reviewCount > 0}
-			<div class="stars">
-				{#each Array(5) as _, i}
-					<span class="star {i < Math.round(averageRating) ? 'filled' : ''}">★</span>
-				{/each}
-			</div>
-			<span class="rating-text">{averageRating} ({reviewCount} {reviewCount === 1 ? 'review' : 'reviews'})</span>
+			<button class="rating-link" onclick={() => onViewReviews(item.id)}>
+				<div class="stars">
+					{#each Array(5) as _, i}
+						<span class="star {i < Math.round(averageRating) ? 'filled' : ''}">★</span>
+					{/each}
+				</div>
+				<span class="rating-text">{averageRating} ({reviewCount} {reviewCount === 1 ? 'review' : 'reviews'})</span>
+			</button>
 		{:else}
 			<span class="no-reviews">No reviews yet</span>
 		{/if}
@@ -103,6 +106,21 @@
 		align-items: center;
 		gap: 0.5rem;
 		margin-bottom: 1rem;
+	}
+
+	.rating-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		transition: opacity 0.2s;
+	}
+
+	.rating-link:hover {
+		opacity: 0.7;
 	}
 
 	.stars {

@@ -2,9 +2,11 @@
 	import { menuItems, reviews } from '$lib/stores';
 	import MenuItemCard from '$lib/components/MenuItemCard.svelte';
 	import ReviewForm from '$lib/components/ReviewForm.svelte';
+	import ViewReviewsModal from '$lib/components/ViewReviewsModal.svelte';
 	import type { MenuItem } from '$lib/types';
 
-	let selectedMenuItem = $state<MenuItem | null>(null);
+	let selectedMenuItemForReview = $state<MenuItem | null>(null);
+	let selectedMenuItemForViewing = $state<MenuItem | null>(null);
 	let selectedCategory = $state<string>('All');
 	
 	let categories = $derived(['All', ...new Set($menuItems.map(item => item.category))]);
@@ -15,11 +17,19 @@
 	);
 
 	function handleReviewClick(itemId: string) {
-		selectedMenuItem = $menuItems.find(item => item.id === itemId) || null;
+		selectedMenuItemForReview = $menuItems.find(item => item.id === itemId) || null;
 	}
 
-	function handleCloseModal() {
-		selectedMenuItem = null;
+	function handleViewReviewsClick(itemId: string) {
+		selectedMenuItemForViewing = $menuItems.find(item => item.id === itemId) || null;
+	}
+
+	function handleCloseReviewModal() {
+		selectedMenuItemForReview = null;
+	}
+
+	function handleCloseViewModal() {
+		selectedMenuItemForViewing = null;
 	}
 </script>
 
@@ -44,6 +54,7 @@
 				{item} 
 				allReviews={$reviews}
 				onReview={handleReviewClick}
+				onViewReviews={handleViewReviewsClick}
 			/>
 		{/each}
 	</div>
@@ -55,10 +66,18 @@
 	{/if}
 </div>
 
-{#if selectedMenuItem}
+{#if selectedMenuItemForReview}
 	<ReviewForm 
-		menuItem={selectedMenuItem}
-		onClose={handleCloseModal}
+		menuItem={selectedMenuItemForReview}
+		onClose={handleCloseReviewModal}
+	/>
+{/if}
+
+{#if selectedMenuItemForViewing}
+	<ViewReviewsModal 
+		menuItem={selectedMenuItemForViewing}
+		allReviews={$reviews}
+		onClose={handleCloseViewModal}
 	/>
 {/if}
 
