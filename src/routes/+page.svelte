@@ -33,22 +33,22 @@
 	}
 </script>
 
-<div class="container">
-	<header>
-		<h1>🍽️ Menu Review App</h1>
-		<p>Discover and review delicious menu items</p>
+<div class="max-w-7xl mx-auto px-8 py-8">
+	<header class="text-center mb-12">
+		<h1 class="text-4xl font-bold text-gray-900 mb-2">🍽️ Menu Review App</h1>
+		<p class="text-gray-600 text-lg">Discover and review delicious menu items</p>
 	</header>
 
-	<div class="filters">
-		<label for="category-filter">Filter by category:</label>
-		<select id="category-filter" bind:value={selectedCategory}>
+	<div class="flex items-center gap-4 mb-8 bg-white p-4 rounded-lg shadow-sm flex-col sm:flex-row">
+		<label for="category-filter" class="font-semibold text-gray-700">Filter by category:</label>
+		<select id="category-filter" bind:value={selectedCategory} class="px-4 py-2 border border-gray-300 rounded-md text-base cursor-pointer bg-white focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 w-full sm:w-auto">
 			{#each categories as category}
 				<option value={category}>{category}</option>
 			{/each}
 		</select>
 	</div>
 
-	<div class="menu-grid">
+	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 		{#each filteredItems as item (item.id)}
 			<MenuItemCard 
 				{item} 
@@ -60,8 +60,8 @@
 	</div>
 
 	{#if filteredItems.length === 0}
-		<div class="no-items">
-			<p>No menu items found in this category.</p>
+		<div class="text-center py-12 bg-white rounded-lg text-gray-600">
+			<p class="text-lg m-0">No menu items found in this category.</p>
 		</div>
 	{/if}
 </div>
@@ -80,108 +80,3 @@
 		onClose={handleCloseViewModal}
 	/>
 {/if}
-
-<style>
-	:global(body) {
-		margin: 0;
-		padding: 0;
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-		background: #f3f4f6;
-	}
-
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 2rem;
-	}
-
-	header {
-		text-align: center;
-		margin-bottom: 3rem;
-	}
-
-	h1 {
-		margin: 0 0 0.5rem 0;
-		color: #1a1a1a;
-		font-size: 2.5rem;
-	}
-
-	header p {
-		margin: 0;
-		color: #6b7280;
-		font-size: 1.125rem;
-	}
-
-	.filters {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		margin-bottom: 2rem;
-		background: white;
-		padding: 1rem;
-		border-radius: 8px;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-	}
-
-	label {
-		font-weight: 600;
-		color: #374151;
-	}
-
-	select {
-		padding: 0.5rem 1rem;
-		border: 1px solid #d1d5db;
-		border-radius: 6px;
-		font-size: 1rem;
-		cursor: pointer;
-		background: white;
-	}
-
-	select:focus {
-		outline: none;
-		border-color: #2563eb;
-		box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-	}
-
-	.menu-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-		gap: 1.5rem;
-	}
-
-	.no-items {
-		text-align: center;
-		padding: 3rem;
-		background: white;
-		border-radius: 8px;
-		color: #6b7280;
-	}
-
-	.no-items p {
-		margin: 0;
-		font-size: 1.125rem;
-	}
-
-	@media (max-width: 640px) {
-		.container {
-			padding: 1rem;
-		}
-
-		h1 {
-			font-size: 2rem;
-		}
-
-		.menu-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.filters {
-			flex-direction: column;
-			align-items: stretch;
-		}
-
-		select {
-			width: 100%;
-		}
-	}
-</style>
