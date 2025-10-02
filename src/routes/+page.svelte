@@ -9,11 +9,11 @@
 	let selectedMenuItemForViewing = $state<MenuItem | null>(null);
 	let selectedCategory = $state<string>('All');
 	
-	let categories = $derived(['All', ...new Set($menuItems.map(item => item.category))]);
+	let categories = $derived(['All', ...new Set($menuItems.flatMap(item => item.categories))]);
 	let filteredItems = $derived(
 		selectedCategory === 'All' 
 			? $menuItems 
-			: $menuItems.filter(item => item.category === selectedCategory)
+			: $menuItems.filter(item => item.categories.includes(selectedCategory))
 	);
 
 	function handleReviewClick(itemId: string) {

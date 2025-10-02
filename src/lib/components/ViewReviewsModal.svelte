@@ -21,7 +21,11 @@
 		<div class="modal-header">
 			<div class="header-info">
 				<h2>{menuItem.name}</h2>
-				<span class="category">{menuItem.category}</span>
+				<div class="categories">
+					{#each menuItem.categories as category}
+						<span class="category">{category}</span>
+					{/each}
+				</div>
 			</div>
 			<button class="close-btn" onclick={onClose} aria-label="Close">×</button>
 		</div>
@@ -101,6 +105,12 @@
 		margin: 0;
 		color: #1a1a1a;
 		font-size: 1.75rem;
+	}
+
+	.categories {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
 	}
 
 	.category {

@@ -20,7 +20,11 @@
 	<div class="card-header">
 		<div class="item-info">
 			<h3>{item.name}</h3>
-			<span class="category">{item.category}</span>
+			<div class="categories">
+				{#each item.categories as category}
+					<span class="category">{category}</span>
+				{/each}
+			</div>
 		</div>
 		<span class="price">${item.price.toFixed(2)}</span>
 	</div>
@@ -78,6 +82,12 @@
 		margin: 0;
 		color: #1a1a1a;
 		font-size: 1.25rem;
+	}
+
+	.categories {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
 	}
 
 	.category {
