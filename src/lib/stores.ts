@@ -8,35 +8,35 @@ const sampleMenuItems: MenuItem[] = [
 		name: 'Classic Burger',
 		description: 'Juicy beef patty with lettuce, tomato, and our special sauce',
 		price: 12.99,
-		category: 'Main Course'
+		categories: ['Main Course', 'Popular']
 	},
 	{
 		id: '2',
 		name: 'Caesar Salad',
 		description: 'Fresh romaine lettuce with parmesan cheese and homemade croutons',
 		price: 8.99,
-		category: 'Salads'
+		categories: ['Salads', 'Healthy']
 	},
 	{
 		id: '3',
 		name: 'Margherita Pizza',
 		description: 'Classic Italian pizza with fresh mozzarella, basil, and tomato sauce',
 		price: 14.99,
-		category: 'Main Course'
+		categories: ['Main Course', 'Italian', 'Popular']
 	},
 	{
 		id: '4',
 		name: 'Chocolate Lava Cake',
 		description: 'Warm chocolate cake with a molten center, served with vanilla ice cream',
 		price: 7.99,
-		category: 'Desserts'
+		categories: ['Desserts', 'Popular']
 	},
 	{
 		id: '5',
 		name: 'Grilled Salmon',
 		description: 'Fresh Atlantic salmon with seasonal vegetables and lemon butter',
 		price: 18.99,
-		category: 'Main Course'
+		categories: ['Main Course', 'Healthy', 'Seafood']
 	}
 ];
 
