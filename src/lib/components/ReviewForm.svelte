@@ -34,32 +34,33 @@
 	}
 </script>
 
-<div class="modal-backdrop" onclick={onClose} onkeydown={(e) => e.key === 'Escape' && onClose()} role="presentation">
-	<div class="modal-content" onclick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" tabindex="-1">
-		<div class="modal-header">
-			<h2>Review: {menuItem.name}</h2>
-			<button class="close-btn" onclick={onClose} aria-label="Close">×</button>
+<div class="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-[1000] p-4" onclick={onClose} onkeydown={(e) => e.key === 'Escape' && onClose()} role="presentation">
+	<div class="bg-white rounded-lg p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto" onclick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" tabindex="-1">
+		<div class="flex justify-between items-center mb-6">
+			<h2 class="m-0 text-gray-900 text-2xl">Review: {menuItem.name}</h2>
+			<button class="bg-transparent border-none text-2xl cursor-pointer text-gray-600 p-0 w-8 h-8 flex items-center justify-center rounded transition-colors hover:bg-gray-100" onclick={onClose} aria-label="Close">×</button>
 		</div>
 
 		<form onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-			<div class="form-group">
-				<label for="author">Your Name</label>
+			<div class="mb-6">
+				<label for="author" class="block mb-2 font-semibold text-gray-700">Your Name</label>
 				<input 
 					id="author"
 					type="text" 
 					bind:value={author}
 					placeholder="Enter your name"
 					required
+					class="w-full p-3 border border-gray-300 rounded-md text-base font-inherit focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
 				/>
 			</div>
 
-			<div class="form-group">
-				<label for="rating">Rating</label>
-				<div id="rating" class="star-rating" role="radiogroup" aria-label="Rating">
+			<div class="mb-6">
+				<label for="rating" class="block mb-2 font-semibold text-gray-700">Rating</label>
+				<div id="rating" class="flex gap-1" role="radiogroup" aria-label="Rating">
 					{#each Array(5) as _, i}
 						<button
 							type="button"
-							class="star-btn {i < rating ? 'filled' : ''}"
+							class="bg-transparent border-none text-[2rem] cursor-pointer p-0 transition-all {i < rating ? 'text-amber-400' : 'text-gray-300'} hover:scale-110"
 							onclick={() => handleStarClick(i + 1)}
 							aria-label="{i + 1} stars"
 						>
@@ -69,168 +70,22 @@
 				</div>
 			</div>
 
-			<div class="form-group">
-				<label for="comment">Your Review</label>
+			<div class="mb-6">
+				<label for="comment" class="block mb-2 font-semibold text-gray-700">Your Review</label>
 				<textarea 
 					id="comment"
 					bind:value={comment}
 					placeholder="Share your thoughts about this menu item..."
 					rows="4"
 					required
+					class="w-full p-3 border border-gray-300 rounded-md text-base font-inherit resize-y focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
 				></textarea>
 			</div>
 
-			<div class="form-actions">
-				<button type="button" class="btn-secondary" onclick={onClose}>Cancel</button>
-				<button type="submit" class="btn-primary">Submit Review</button>
+			<div class="flex gap-4 justify-end mt-8">
+				<button type="button" class="px-6 py-3 rounded-md font-semibold cursor-pointer border-none transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200" onclick={onClose}>Cancel</button>
+				<button type="submit" class="px-6 py-3 rounded-md font-semibold cursor-pointer border-none transition-colors bg-blue-600 text-white hover:bg-blue-700">Submit Review</button>
 			</div>
 		</form>
 	</div>
 </div>
-
-<style>
-	.modal-backdrop {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: rgba(0, 0, 0, 0.5);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		z-index: 1000;
-		padding: 1rem;
-	}
-
-	.modal-content {
-		background: white;
-		border-radius: 8px;
-		padding: 2rem;
-		max-width: 500px;
-		width: 100%;
-		max-height: 90vh;
-		overflow-y: auto;
-	}
-
-	.modal-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 1.5rem;
-	}
-
-	h2 {
-		margin: 0;
-		color: #1a1a1a;
-		font-size: 1.5rem;
-	}
-
-	.close-btn {
-		background: none;
-		border: none;
-		font-size: 2rem;
-		cursor: pointer;
-		color: #6b7280;
-		padding: 0;
-		width: 2rem;
-		height: 2rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 4px;
-		transition: background 0.2s;
-	}
-
-	.close-btn:hover {
-		background: #f3f4f6;
-	}
-
-	.form-group {
-		margin-bottom: 1.5rem;
-	}
-
-	label {
-		display: block;
-		margin-bottom: 0.5rem;
-		font-weight: 600;
-		color: #374151;
-	}
-
-	input, textarea {
-		width: 100%;
-		padding: 0.75rem;
-		border: 1px solid #d1d5db;
-		border-radius: 6px;
-		font-size: 1rem;
-		font-family: inherit;
-	}
-
-	input:focus, textarea:focus {
-		outline: none;
-		border-color: #2563eb;
-		box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-	}
-
-	textarea {
-		resize: vertical;
-	}
-
-	.star-rating {
-		display: flex;
-		gap: 0.25rem;
-	}
-
-	.star-btn {
-		background: none;
-		border: none;
-		font-size: 2rem;
-		cursor: pointer;
-		padding: 0;
-		color: #d1d5db;
-		transition: color 0.2s, transform 0.1s;
-	}
-
-	.star-btn:hover {
-		transform: scale(1.1);
-	}
-
-	.star-btn.filled {
-		color: #fbbf24;
-	}
-
-	.form-actions {
-		display: flex;
-		gap: 1rem;
-		justify-content: flex-end;
-		margin-top: 2rem;
-	}
-
-	button[type="submit"],
-	button[type="button"] {
-		padding: 0.75rem 1.5rem;
-		border-radius: 6px;
-		font-weight: 600;
-		cursor: pointer;
-		border: none;
-		transition: background 0.2s;
-	}
-
-	.btn-primary {
-		background: #2563eb;
-		color: white;
-	}
-
-	.btn-primary:hover {
-		background: #1d4ed8;
-	}
-
-	.btn-secondary {
-		background: #f3f4f6;
-		color: #374151;
-	}
-
-	.btn-secondary:hover {
-		background: #e5e7eb;
-	}
-</style>

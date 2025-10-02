@@ -1,5 +1,6 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
+	import '$lib/styles/app.css';
 
 	let { children } = $props();
 </script>
@@ -11,15 +12,3 @@
 </svelte:head>
 
 {@render children?.()}
-
-<style>
-	:global(*) {
-		box-sizing: border-box;
-	}
-
-	:global(html, body) {
-		margin: 0;
-		padding: 0;
-		min-height: 100vh;
-	}
-</style>
